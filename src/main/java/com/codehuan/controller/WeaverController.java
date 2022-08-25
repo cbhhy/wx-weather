@@ -1,5 +1,8 @@
 package com.codehuan.controller;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSONArray;
 import com.codehuan.constant.Constants;
@@ -9,6 +12,8 @@ import com.codehuan.util.WXUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,13 +47,18 @@ public class WeaverController {
             log.error("errorInfo:{}", e.getMessage());
         }
 
-        //    计算人员生日，
-        int birthday = TokenUtil.getNextBirthday("02-12");
+        // 计算生日，
+        int birthday = TokenUtil.getNextBirthday("01-28");
 
-        //    相识多久
-        Long days = TokenUtil.getCountDays("2022-03-1");
+        // 单身多久
+        Long days = TokenUtil.getCountDays("1998-01-28");
 
-        // 彩虹屁
+        // 获取星期
+        Date date = new Date();
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        String currSun = dateFm.format(date);
+
+        // 毒鸡汤
         String text;
         try {
             text = TokenUtil.gettext();
@@ -93,6 +103,14 @@ public class WeaverController {
         param9.put("value", weaver.getWindpower());
         param9.put("color", WXUtil.getColor());
 
+        JSONObject param10 = new JSONObject();
+        param10.put("value", DateUtil.format(new Date(), DatePattern.NORM_DATE_FORMATTER));
+        param10.put("color", WXUtil.getColor());
+
+        JSONObject param11 = new JSONObject();
+        param11.put("value", currSun);
+        param11.put("color", WXUtil.getColor());
+
         Map<String, Object> data = new HashMap<>();
         data.put("weather", param);
         data.put("temperature", param2);
@@ -103,8 +121,15 @@ public class WeaverController {
         data.put("humidity", param7);
         data.put("words", param8);
         data.put("windpower", param9);
+        data.put("date", param10);
+        data.put("week", param11);
+
         // 发送信息
 
-        WXUtil.sendMsg(users.get(0).toString(), Constants.TEMPLATE, Constants.APP_ID, data);
+        assert users != null;
+        for (int i = 0; i < users.size(); i++) {
+            WXUtil.sendMsg(users.get(i).toString(), Constants.TEMPLATE, Constants.APP_ID, data);
+        }
+
     }
 }

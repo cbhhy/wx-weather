@@ -19,7 +19,7 @@ public class Constants {
     /**
      * TEMPLATE 模板ID
      */
-    public static final String TEMPLATE = "OIHZq-S-VgRAB_tg7rotlKugq3j0m5mOUlzoxgmDrt0";
+    public static final String TEMPLATE = "rbK71UNR3hgYtS3Kx9q8iC0n-BSbFcrjpSjZ8JFSRrI";
 
     /**
      * 缓存名称
@@ -29,12 +29,12 @@ public class Constants {
     /**
      * APP_ID
      */
-    public static final String APP_ID = "wx74a0a14472a53da4";
+    public static final String APP_ID = "wx556ea804a777e1f6";
 
     /**
      * API_SECRET
      */
-    public static final String API_SECRET = "fe8aa9466be98c0256f76d365f14fc9b";
+    public static final String API_SECRET = "78866d1a4a00ac2d369d7636a8463860";
 
     /**
      * 百度API
@@ -44,7 +44,7 @@ public class Constants {
     /**
      * KEY
      */
-    public static final String KEY = "d63b9bdc7a4ca54ec544dc7fd9ab815a";
+    public static final String KEY = "e7ea186555781b3803ec27e7f9c78af5";
 
     /**
      * 城市编码
