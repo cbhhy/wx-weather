@@ -198,7 +198,7 @@ public class TokenUtil {
     }
 
     public static String gettext() throws UnsupportedEncodingException {
-        String url = "https://api.shadiao.pro/du";
+        String url = "https://api.shadiao.pro/chp";
         String body = HttpRequest
                 .get(url)
                 .execute()

@@ -1,5 +1,7 @@
 package com.codehuan.task;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSONArray;
 import com.codehuan.constant.Constants;
@@ -11,6 +13,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +28,7 @@ import java.util.Map;
 @Component
 public class WXTask {
 
-    @Scheduled(cron = "* * 8  * * ? ")
+    @Scheduled(cron = "00 00 9 * * ?")
     public void execute() {
 
         log.info("开始执行定时任务!!!");
@@ -45,11 +49,16 @@ public class WXTask {
             log.error("errorInfo:{}", e.getMessage());
         }
 
-        //    计算人员生日，
-        int birthday = TokenUtil.getNextBirthday("02-12");
+        // 计算生日，
+        int birthday = TokenUtil.getNextBirthday("01-22");
 
-        //    相识多久
-        Long days = TokenUtil.getCountDays("2022-03-1");
+        // 单身多久
+        Long days = TokenUtil.getCountDays("1998-01-28");
+
+        // 获取星期
+        Date date = new Date();
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        String currSun = dateFm.format(date);
 
         // 彩虹屁
         String text;
@@ -76,9 +85,9 @@ public class WXTask {
         param4.put("value", weaver.getWinddirection());
         param4.put("color", WXUtil.getColor());
 
-        JSONObject param5 = new JSONObject();
-        param5.put("value", days);
-        param5.put("color", WXUtil.getColor());
+//        JSONObject param5 = new JSONObject();
+//        param5.put("value", days);
+//        param5.put("color", WXUtil.getColor());
 
         JSONObject param6 = new JSONObject();
         param6.put("value", birthday);
@@ -96,21 +105,32 @@ public class WXTask {
         param9.put("value", weaver.getWindpower());
         param9.put("color", WXUtil.getColor());
 
+        JSONObject param10 = new JSONObject();
+        param10.put("value", DateUtil.format(new Date(), DatePattern.NORM_DATE_FORMATTER));
+        param10.put("color", WXUtil.getColor());
+
+        JSONObject param11 = new JSONObject();
+        param11.put("value", currSun);
+        param11.put("color", WXUtil.getColor());
+
         Map<String, Object> data = new HashMap<>();
         data.put("weather", param);
         data.put("temperature", param2);
         data.put("cityname", param3);
         data.put("winddirection", param4);
-        data.put("love_days", param5);
+        //data.put("love_days", param5);
         data.put("birthday_left", param6);
         data.put("humidity", param7);
         data.put("words", param8);
         data.put("windpower", param9);
+        data.put("date", param10);
+        data.put("week", param11);
 
         // 发送信息
+
         assert users != null;
-        for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), Constants.TEMPLATE, Constants.APP_ID, data);
+        for (int i = 0; i < users.size(); i++) {
+            WXUtil.sendMsg(users.get(i).toString(), Constants.TEMPLATE, Constants.APP_ID, data);
         }
     }
 

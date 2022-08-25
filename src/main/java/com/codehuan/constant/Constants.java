@@ -19,7 +19,7 @@ public class Constants {
     /**
      * TEMPLATE 模板ID
      */
-    public static final String TEMPLATE = "rbK71UNR3hgYtS3Kx9q8iC0n-BSbFcrjpSjZ8JFSRrI";
+    public static final String TEMPLATE = "LchDS4NhujtNK0f5EPOTtlfUaZe4rNNa3-ClCdepu08";
 
     /**
      * 缓存名称
