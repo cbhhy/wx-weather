@@ -19,7 +19,7 @@ public class Constants {
     /**
      * TEMPLATE 模板ID
      */
-    public static final String TEMPLATE = "LchDS4NhujtNK0f5EPOTtlfUaZe4rNNa3-ClCdepu08";
+    public static final String TEMPLATE = "POtcJuGShxio3VqjBKC14lrG_wbzJBwuGVgKNe5tebI";
 
     /**
      * 缓存名称
@@ -29,12 +29,12 @@ public class Constants {
     /**
      * APP_ID
      */
-    public static final String APP_ID = "wx556ea804a777e1f6";
+    public static final String APP_ID = "wxc546c961e3c77299";
 
     /**
      * API_SECRET
      */
-    public static final String API_SECRET = "78866d1a4a00ac2d369d7636a8463860";
+    public static final String API_SECRET = "c93c6e9d77d0b5e7d64cd6ef88422a1b";
 
     /**
      * 百度API
