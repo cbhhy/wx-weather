@@ -48,7 +48,7 @@ public class WeaverController {
         }
 
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("01-28");
+        int birthday = TokenUtil.getNextBirthday("01-22");
 
         // 单身多久
         Long days = TokenUtil.getCountDays("1998-01-28");
@@ -58,7 +58,7 @@ public class WeaverController {
         SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
         String currSun = dateFm.format(date);
 
-        // 毒鸡汤
+        // 彩虹屁
         String text;
         try {
             text = TokenUtil.gettext();
@@ -83,9 +83,9 @@ public class WeaverController {
         param4.put("value", weaver.getWinddirection());
         param4.put("color", WXUtil.getColor());
 
-        JSONObject param5 = new JSONObject();
-        param5.put("value", days);
-        param5.put("color", WXUtil.getColor());
+//        JSONObject param5 = new JSONObject();
+//        param5.put("value", days);
+//        param5.put("color", WXUtil.getColor());
 
         JSONObject param6 = new JSONObject();
         param6.put("value", birthday);
@@ -116,7 +116,7 @@ public class WeaverController {
         data.put("temperature", param2);
         data.put("cityname", param3);
         data.put("winddirection", param4);
-        data.put("love_days", param5);
+        //data.put("love_days", param5);
         data.put("birthday_left", param6);
         data.put("humidity", param7);
         data.put("words", param8);
@@ -130,6 +130,5 @@ public class WeaverController {
         for (int i = 0; i < users.size(); i++) {
             WXUtil.sendMsg(users.get(i).toString(), Constants.TEMPLATE, Constants.APP_ID, data);
         }
-
     }
 }
