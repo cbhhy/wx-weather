@@ -29,12 +29,12 @@ public class Constants {
     /**
      * APP_ID
      */
-    public static final String APP_ID = "wx556ea804a777e1f6";
+    public static final String APP_ID = "wxc546c961e3c77299";
 
     /**
      * API_SECRET
      */
-    public static final String API_SECRET = "78866d1a4a00ac2d369d7636a8463860";
+    public static final String API_SECRET = "c93c6e9d77d0b5e7d64cd6ef88422a1b";
 
     /**
      * 百度API
@@ -47,14 +47,14 @@ public class Constants {
     public static final String KEY = "e7ea186555781b3803ec27e7f9c78af5";
 
     /**
-     * 城市编码
+     * 城市编码 440306-宝安 360732-兴国
      */
-    public static final String CITY = "440300";
+    public static final String CITY = "440306";
 
     /**
      * base 只获取当日信息  all 获取往后三天信息
      */
-    public static final String EXTENSIONS = "base";
+    public static final String EXTENSIONS = "all";
 
     /**
      * 返回值类型  JSON/XML

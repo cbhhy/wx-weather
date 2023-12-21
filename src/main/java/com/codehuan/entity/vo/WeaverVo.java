@@ -41,6 +41,7 @@ public class WeaverVo {
     private String count;
     private String info;
     private String infocode;
+    private List<Weaver> forecast;
     private List<Weaver> lives;
 
 }

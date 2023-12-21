@@ -6,8 +6,10 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.codehuan.constant.Constants;
 import com.codehuan.entity.Weaver;
+import com.codehuan.entity.vo.GaoDeWeaverVo;
 import com.codehuan.entity.vo.WeaverVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -137,6 +139,31 @@ public class TokenUtil {
     }
 
 
+    public static GaoDeWeaverVo getGaoDeWeaver() throws Exception {
+        Map<String, String> map = new HashMap<>();
+        map.put("key", Constants.KEY);
+        map.put("city", Constants.CITY);
+        map.put("extensions", Constants.EXTENSIONS);
+        map.put("output", Constants.OUTPUT);
+
+        String body = HttpRequest
+                .get(Constants.URL)
+                .formStr(map)
+                .execute()
+                .body();
+        GaoDeWeaverVo weaverVo = JSON.parseObject(body, GaoDeWeaverVo.class);
+
+        if (!SUCCESS.equals(weaverVo.getStatus())) {
+            log.error("请求异常,code={},msg={}", weaverVo.getStatus(), weaverVo.getInfo());
+        }
+        log.debug(JSON.toJSONString(weaverVo));
+        return weaverVo;
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(getGaoDeWeaver());
+    }
+
     /**
      * 计算生日
      *
@@ -198,7 +225,7 @@ public class TokenUtil {
     }
 
     public static String gettext() throws UnsupportedEncodingException {
-        String url = "https://api.shadiao.pro/du";
+        String url = "https://api.shadiao.pro/chp";
         String body = HttpRequest
                 .get(url)
                 .execute()
@@ -206,9 +233,5 @@ public class TokenUtil {
         JSONObject jsonObject = JSON.parseObject(body);
         String text = URLDecoder.decode(jsonObject.getJSONObject("data").get("text").toString().replace("%", "%25"), "utf8");
         return text;
-    }
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(getWeaver());
     }
 }
