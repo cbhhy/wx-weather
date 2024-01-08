@@ -24,6 +24,27 @@ import java.util.Map;
 @Slf4j
 public class WeaverController {
 
+    private static String substringSafe(String input, int beginIndex, int endIndex) {
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
+        int length = input.length();
+        if (beginIndex < 0) {
+            beginIndex = 0;
+        }
+        if (endIndex > length) {
+            endIndex = length;
+        }
+
+        // 如果截取的起始位置大于等于结束位置，则返回空字符串
+        if (beginIndex >= endIndex) {
+            return "";
+        }
+
+        return input.substring(beginIndex, endIndex);
+    }
+
     /**
      * 测试
      *
@@ -50,13 +71,21 @@ public class WeaverController {
 
         // 毒鸡汤
         String text = null;
-        while (text == null || text.length() >= 21) {
+        String text1 = null;
+        String text2 = null;
+        String text3 = null;
+        while (text == null || text.length() <= 30) {
             try {
                 text = TokenUtil.gettext();
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
         }
+        // 分别截取20个字符到text1、text2、text3
+        text1 = substringSafe(text, 0, 20);
+        text2 = substringSafe(text, 20, 40);
+        text3 = substringSafe(text, 40, 60);
+
 
         // 参数封装
         JSONObject param = new JSONObject();
@@ -96,6 +125,19 @@ public class WeaverController {
         param8.put("value", text);
         param8.put("color", WXUtil.getColor());
 
+        JSONObject param13 = new JSONObject();
+        param13.put("value", text1);
+        param13.put("color", WXUtil.getColor());
+
+        JSONObject param14 = new JSONObject();
+        param14.put("value", text2);
+        param14.put("color", WXUtil.getColor());
+
+        JSONObject param15 = new JSONObject();
+        param15.put("value", text3);
+        param15.put("color", WXUtil.getColor());
+
+
         JSONObject param9 = new JSONObject();
         param9.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayPower());
         param9.put("color", WXUtil.getColor());
@@ -118,6 +160,9 @@ public class WeaverController {
         data.put("birthday_left", param6);
 //        data.put("humidity", param7);
         data.put("words", param8);
+        data.put("words1", param13);
+        data.put("words2", param14);
+        data.put("words3", param15);
         data.put("windpower", param9);
         data.put("date", param10);
         data.put("week", param11);
@@ -132,9 +177,9 @@ public class WeaverController {
         // 发送信息
 
         assert users != null;
-        for (int i = 0; i < users.size(); i++) {
-            if (users.toString().equals("oJr7d6eZMUilE3trpA53UZSdVJMQ")) {
-                WXUtil.sendMsg(users.toString(), "04yR94K8HXBmsLRKkeDN5M0DXLEhLSnUs6k8xmuS9j8", Constants.APP_ID, data);
+        for (Object user : users) {
+            if (user.toString().equals("oJr7d6eZMUilE3trpA53UZSdVJMQ")) {
+                WXUtil.sendMsg(user.toString(), "32ngK9-0nX02bsxppFY1mECHZZBVMAucnVAvrRXpBBc", Constants.APP_ID, data);
             }
         }
     }
