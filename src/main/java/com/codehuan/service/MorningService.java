@@ -45,7 +45,7 @@ public class MorningService {
 
         // 毒鸡汤
         String text = null;
-        while (text == null || text.length() >= 21) {
+        while (text == null || text.length() > 21) {
             try {
                 text = TokenUtil.gettext();
             } catch (UnsupportedEncodingException e) {

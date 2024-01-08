@@ -46,7 +46,7 @@ public class EveningService {
 
         // 毒鸡汤
         String text = null;
-        while (text == null || text.length() >= 21) {
+        while (text == null || text.length() > 21) {
             try {
                 text = TokenUtil.gettext();
             } catch (UnsupportedEncodingException e) {
@@ -89,7 +89,7 @@ public class EveningService {
 //        param7.put("color", WXUtil.getColor());
 
         JSONObject param8 = new JSONObject();
-        param8.put("value", "很抱歉的通知11，你的圣诞礼物预计有迟到风险");
+        param8.put("value", text);
         param8.put("color", WXUtil.getColor());
 
         JSONObject param9 = new JSONObject();

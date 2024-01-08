@@ -87,7 +87,7 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-                WXUtil.sendMsg(user.toString(), "ZdWpgKGRZgcbEtNMT2OnmZzNbUcxD7eY76vHodcSaPQ", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "ZdWpgKGRZgcbEtNMT2OnmZzNbUcxD7eY76vHodcSaPQ", Constants.APP_ID, data);
         }
     }
 }

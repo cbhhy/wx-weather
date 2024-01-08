@@ -1,12 +1,11 @@
 package com.codehuan.controller;
 
 import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSONArray;
 import com.codehuan.constant.Constants;
-import com.codehuan.entity.Weaver;
+import com.codehuan.entity.vo.GaoDeWeaverVo;
 import com.codehuan.util.TokenUtil;
 import com.codehuan.util.WXUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,75 +31,73 @@ public class WeaverController {
      */
     public static void main(String[] args) {
         //    获取天气信息
-        Weaver weaver = null;
-        // 用户
-        JSONArray users = null;
+        GaoDeWeaverVo weaver = null;
         try {
-            weaver = TokenUtil.getWeaver();
+            weaver = TokenUtil.getGaoDeWeaver();
         } catch (Exception e) {
             log.error("errorInfo:{}", e.getMessage());
         }
-        //    获取人员信息
-        try {
-            users = TokenUtil.getFlower();
-        } catch (Exception e) {
-            log.error("errorInfo:{}", e.getMessage());
-        }
-
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("01-22");
+        int birthday = TokenUtil.getNextBirthday("01-27");
 
-        // 单身多久
-        Long days = TokenUtil.getCountDays("1998-01-28");
+        // 在一起多少天
+        Long days = TokenUtil.getCountDays("2023-11-11");
 
         // 获取星期
         Date date = new Date();
         SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
         String currSun = dateFm.format(date);
 
-        // 彩虹屁
-        String text;
-        try {
-            text = TokenUtil.gettext();
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+        // 毒鸡汤
+        String text = null;
+        while (text == null || text.length() >= 21) {
+            try {
+                text = TokenUtil.gettext();
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // 参数封装
         JSONObject param = new JSONObject();
-        param.put("value", weaver.getWeather());
+        assert weaver != null;
+        param.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayWeather());
         param.put("color", WXUtil.getColor());
 
         JSONObject param2 = new JSONObject();
-        param2.put("value", weaver.getTemperature() + " ℃");
+        param2.put("value", weaver.getForecasts().get(0).getCasts().get(0).getNightTemp());
         param2.put("color", WXUtil.getColor());
 
+        JSONObject param12 = new JSONObject();
+        param12.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayTemp() + " ℃");
+        param12.put("color", WXUtil.getColor());
+
         JSONObject param3 = new JSONObject();
-        param3.put("value", weaver.getProvince() + weaver.getCity());
+        param3.put("value", "深圳市" + weaver.getForecasts().get(0).getCity());
         param3.put("color", WXUtil.getColor());
 
         JSONObject param4 = new JSONObject();
-        param4.put("value", weaver.getWinddirection());
+        param4.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayWind());
         param4.put("color", WXUtil.getColor());
 
-//        JSONObject param5 = new JSONObject();
-//        param5.put("value", days);
-//        param5.put("color", WXUtil.getColor());
+        JSONObject param5 = new JSONObject();
+        param5.put("value", days);
+        param5.put("color", WXUtil.getColor());
 
         JSONObject param6 = new JSONObject();
         param6.put("value", birthday);
         param6.put("color", WXUtil.getColor());
 
-        JSONObject param7 = new JSONObject();
-        param7.put("value", weaver.getHumidity() + "%");
-        param7.put("color", WXUtil.getColor());
+//        JSONObject param7 = new JSONObject();
+//        param7.put("value", weaver.getHumidity() + "%");
+//        param7.put("color", WXUtil.getColor());
 
         JSONObject param8 = new JSONObject();
         param8.put("value", text);
         param8.put("color", WXUtil.getColor());
 
         JSONObject param9 = new JSONObject();
-        param9.put("value", weaver.getWindpower());
+        param9.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayPower());
         param9.put("color", WXUtil.getColor());
 
         JSONObject param10 = new JSONObject();
@@ -113,22 +110,32 @@ public class WeaverController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("weather", param);
-        data.put("temperature", param2);
+        data.put("nighttemp", param2);
+        data.put("daytemp", param12);
         data.put("cityname", param3);
         data.put("winddirection", param4);
-        //data.put("love_days", param5);
+        data.put("loveDays", param5);
         data.put("birthday_left", param6);
-        data.put("humidity", param7);
+//        data.put("humidity", param7);
         data.put("words", param8);
         data.put("windpower", param9);
         data.put("date", param10);
         data.put("week", param11);
-
+        // 用户
+        JSONArray users = null;
+        //    获取人员信息
+        try {
+            users = TokenUtil.getFlower();
+        } catch (Exception e) {
+            log.error("errorInfo:{}", e.getMessage());
+        }
         // 发送信息
 
         assert users != null;
         for (int i = 0; i < users.size(); i++) {
-            WXUtil.sendMsg(users.get(i).toString(), Constants.TEMPLATE, Constants.APP_ID, data);
+            if (users.toString().equals("oJr7d6eZMUilE3trpA53UZSdVJMQ")) {
+                WXUtil.sendMsg(users.toString(), "04yR94K8HXBmsLRKkeDN5M0DXLEhLSnUs6k8xmuS9j8", Constants.APP_ID, data);
+            }
         }
     }
 }
