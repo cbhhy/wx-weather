@@ -69,7 +69,7 @@ public class WXTask {
 
 
     //@Scheduled(cron = "0 */1 *  * * ? ")
-    @Scheduled(cron = "00 30 22 * * ? ")
+    @Scheduled(cron = "00 00 22 * * ? ")
     public void evening() {
         log.info("开始执行定时任务!!!");
         Map<String, Object> data = eveningService.encapsulation();
