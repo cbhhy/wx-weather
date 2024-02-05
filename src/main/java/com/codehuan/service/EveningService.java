@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +24,8 @@ import java.util.Map;
 @Slf4j
 @Service
 public class EveningService {
+
+    private static int textIndex = 0; // 用于追踪已选择的文本索引
 
     public Map<String, Object> encapsulation() {
         //    获取天气信息
@@ -50,18 +53,19 @@ public class EveningService {
         String text3 = null;
         String text4 = null;
         String text5 = null;
-
         try {
-            text = TokenUtil.gettext();
+            do {
+                text = TokenUtil.gettext().replace("\n", "");
+            } while (text.contains("——"));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
         // 分别截取20个字符到text1、text2、text3
-         text1 = substringSafe(text, 0, 20);
-         text2 = substringSafe(text, 20, 40);
-         text3 = substringSafe(text, 40, 60);
-         text4 = substringSafe(text, 60, 80);
-         text5 = substringSafe(text, 80, 100);
+        text1 = substringSafe(text, 0, 20);
+        text2 = substringSafe(text, 20, 40);
+        text3 = substringSafe(text, 40, 60);
+        text4 = substringSafe(text, 60, 80);
+        text5 = substringSafe(text, 80, 100);
 
         // 参数封装
         JSONObject param = new JSONObject();
@@ -78,7 +82,7 @@ public class EveningService {
         param12.put("color", WXUtil.getColor());
 
         JSONObject param3 = new JSONObject();
-        param3.put("value", "深圳市" + weaver.getForecasts().get(0).getCity());
+        param3.put("value", "赣州市" + weaver.getForecasts().get(0).getCity());
         param3.put("color", WXUtil.getColor());
 
         JSONObject param4 = new JSONObject();
@@ -174,5 +178,14 @@ public class EveningService {
         }
 
         return input.substring(beginIndex, endIndex);
+    }
+
+    // 按顺序选择文本
+    private static String getSequentialText(List<String> list) {
+        if (textIndex >= list.size()) {
+            // 如果计数器超过文本列表的大小，重新从列表的开头开始
+            textIndex = 0;
+        }
+        return list.get(textIndex++);
     }
 }

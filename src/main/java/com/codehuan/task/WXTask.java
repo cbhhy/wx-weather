@@ -23,7 +23,6 @@ public class WXTask {
     @Resource
     EveningService eveningService;
 
-
     //@Scheduled(cron = "0 */1 *  * * ? ")
     @Scheduled(cron = "00 30 6 ? * MON-FRI")
     public void morningWeekday() {
@@ -40,8 +39,10 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), "O9khaHBRDyUe8ogTiAyOfW_wsxPeel1YTjnhCBeVeIg", Constants.APP_ID, data);
+            // if ("oJr7d6eZMUilE3trpA53UZSdVJMQ".equals(user.toString())) {
+            WXUtil.sendMsg(user.toString(), "8kNNaVRV2RBYaBijt1hlEl2cORjc3la0BG6L4kniBT8", Constants.APP_ID, data);
         }
+        //}
     }
 
     @Scheduled(cron = "00 30 7 ? * SAT-SUN")
@@ -59,13 +60,9 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), "O9khaHBRDyUe8ogTiAyOfW_wsxPeel1YTjnhCBeVeIg", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "8kNNaVRV2RBYaBijt1hlEl2cORjc3la0BG6L4kniBT8", Constants.APP_ID, data);
         }
     }
-
-//        
-//
-//    }
 
 
     //@Scheduled(cron = "0 */1 *  * * ? ")
@@ -84,7 +81,11 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), "oE4j8KCuwSwG4Qe8v-X9b0xR3Ao0mZmuueLJcn5id1s", Constants.APP_ID, data);
+            //   if ("oJr7d6eZMUilE3trpA53UZSdVJMQ".equals(user.toString())) {
+            WXUtil.sendMsg(user.toString(), "4RG93ZEVtC2g3lL6LUaWmbFTQtnVW80OUr36U5O24qc", Constants.APP_ID, data);
         }
+        // }
     }
+
+
 }

@@ -49,7 +49,7 @@ public class Constants {
     /**
      * 城市编码 440306-宝安 360732-兴国
      */
-    public static final String CITY = "440306";
+    public static final String CITY = "360732";
 
     /**
      * base 只获取当日信息  all 获取往后三天信息
