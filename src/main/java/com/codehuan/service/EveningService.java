@@ -36,10 +36,10 @@ public class EveningService {
             log.error("errorInfo:{}", e.getMessage());
         }
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("01-27");
+        int birthday = TokenUtil.getNextBirthday("09-27");
 
         // 在一起多少天
-        Long days = TokenUtil.getCountDays("2023-11-11");
+        Long days = TokenUtil.getCountDays("2024-09-27");
 
         // 获取星期
         Date date = new Date();
@@ -56,10 +56,11 @@ public class EveningService {
         try {
             do {
                 text = TokenUtil.gettext().replace("\n", "");
-            } while (text.contains("——"));
+            } while (text.contains("——") || text.length() >= 100);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+        //text="";
         // 分别截取20个字符到text1、text2、text3
         text1 = substringSafe(text, 0, 20);
         text2 = substringSafe(text, 20, 40);

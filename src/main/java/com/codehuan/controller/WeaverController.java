@@ -178,8 +178,8 @@ public class WeaverController {
 
         assert users != null;
         for (Object user : users) {
-            if (user.toString().equals("oJr7d6eZMUilE3trpA53UZSdVJMQ")) {
-                WXUtil.sendMsg(user.toString(), "32ngK9-0nX02bsxppFY1mECHZZBVMAucnVAvrRXpBBc", Constants.APP_ID, data);
+            if (user.toString().equals("o9HYe6hUrCAQO_DSdJsAdDvBqKtA")) {
+                WXUtil.sendMsg(user.toString(), "nhLFV3B3SQlnsLSgc4QXuXfqyapLVzEPhY8r1KSveRk", Constants.APP_ID, data);
             }
         }
     }
