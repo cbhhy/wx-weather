@@ -36,7 +36,7 @@ public class EveningService {
             log.error("errorInfo:{}", e.getMessage());
         }
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("09-27");
+        int birthday = TokenUtil.getNextBirthday("11-16");
 
         // 在一起多少天
         Long days = TokenUtil.getCountDays("2024-09-27");
@@ -83,7 +83,7 @@ public class EveningService {
         param12.put("color", WXUtil.getColor());
 
         JSONObject param3 = new JSONObject();
-        param3.put("value", "赣州市" + weaver.getForecasts().get(0).getCity());
+        param3.put("value", "深圳市" + weaver.getForecasts().get(0).getCity());
         param3.put("color", WXUtil.getColor());
 
         JSONObject param4 = new JSONObject();

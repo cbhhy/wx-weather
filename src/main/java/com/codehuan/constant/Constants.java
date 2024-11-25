@@ -47,9 +47,9 @@ public class Constants {
     public static final String KEY = "e7ea186555781b3803ec27e7f9c78af5";
 
     /**
-     * 城市编码 440306-宝安 360732-兴国
+     * 城市编码 440303-罗湖 360732-兴国
      */
-    public static final String CITY = "360732";
+    public static final String CITY = "440303";
 
     /**
      * base 只获取当日信息  all 获取往后三天信息

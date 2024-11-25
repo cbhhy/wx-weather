@@ -24,7 +24,7 @@ public class WXTask {
     EveningService eveningService;
 
     //@Scheduled(cron = "0 */1 *  * * ? ")
-    @Scheduled(cron = "00 30 6 ? * MON-FRI")
+    @Scheduled(cron = "00 30 7 ? * MON-FRI")
     public void morningWeekday() {
         log.info("开始执行定时任务!!!");
         Map<String, Object> data = eveningService.encapsulation();
@@ -40,12 +40,12 @@ public class WXTask {
         assert users != null;
         for (Object user : users) {
             // if ("oJr7d6eZMUilE3trpA53UZSdVJMQ".equals(user.toString())) {
-            WXUtil.sendMsg(user.toString(), "8kNNaVRV2RBYaBijt1hlEl2cORjc3la0BG6L4kniBT8", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "X81kjwS9fLpOOy1WBo3KR5wwTk7tithauw8vMObe2jc", Constants.APP_ID, data);
         }
         //}
     }
 
-    @Scheduled(cron = "00 30 7 ? * SAT-SUN")
+    @Scheduled(cron = "00 30 8 ? * SAT-SUN")
     public void morningWeekend() {
         log.info("开始执行定时任务!!!");
         Map<String, Object> data = eveningService.encapsulation();
@@ -60,13 +60,13 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), "8kNNaVRV2RBYaBijt1hlEl2cORjc3la0BG6L4kniBT8", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "X81kjwS9fLpOOy1WBo3KR5wwTk7tithauw8vMObe2jc", Constants.APP_ID, data);
         }
     }
 
 
     //@Scheduled(cron = "0 */1 *  * * ? ")
-    @Scheduled(cron = "00 00 22 * * ? ")
+    @Scheduled(cron = "00 30 23 * * ? ")
     public void evening() {
         log.info("开始执行定时任务!!!");
         Map<String, Object> data = eveningService.encapsulation();
@@ -82,7 +82,7 @@ public class WXTask {
         assert users != null;
         for (Object user : users) {
             //   if ("oJr7d6eZMUilE3trpA53UZSdVJMQ".equals(user.toString())) {
-            WXUtil.sendMsg(user.toString(), "4RG93ZEVtC2g3lL6LUaWmbFTQtnVW80OUr36U5O24qc", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "WZAaO8gRrm8lM1K1ZBJuCU6m2bk0vo3hoxSvc2j5QLc", Constants.APP_ID, data);
         }
         // }
     }

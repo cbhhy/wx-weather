@@ -59,7 +59,7 @@ public class WeaverController {
             log.error("errorInfo:{}", e.getMessage());
         }
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("01-27");
+        int birthday = TokenUtil.getNextBirthday("11-16");
 
         // 在一起多少天
         Long days = TokenUtil.getCountDays("2023-11-11");
