@@ -3,7 +3,6 @@ package com.codehuan.service;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.codehuan.entity.Weaver;
 import com.codehuan.entity.vo.GaoDeWeaverVo;
 import com.codehuan.util.TokenUtil;
 import com.codehuan.util.WXUtil;
@@ -14,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +25,9 @@ import java.util.Map;
 @Service
 public class EveningService {
 
-    public Map<String, Object> encapsulation(){
+    private static int textIndex = 0; // 用于追踪已选择的文本索引
+
+    public Map<String, Object> encapsulation() {
         //    获取天气信息
         GaoDeWeaverVo weaver = null;
         try {
@@ -34,10 +36,10 @@ public class EveningService {
             log.error("errorInfo:{}", e.getMessage());
         }
         // 计算生日，
-        int birthday = TokenUtil.getNextBirthday("01-27");
+        int birthday = TokenUtil.getNextBirthday("09-27");
 
         // 在一起多少天
-        Long days = TokenUtil.getCountDays("2023-11-11");
+        Long days = TokenUtil.getCountDays("2024-09-27");
 
         // 获取星期
         Date date = new Date();
@@ -46,13 +48,25 @@ public class EveningService {
 
         // 毒鸡汤
         String text = null;
-        while (text == null || text.length() >= 21) {
-            try {
-                text = TokenUtil.gettext();
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            }
+        String text1 = null;
+        String text2 = null;
+        String text3 = null;
+        String text4 = null;
+        String text5 = null;
+        try {
+            do {
+                text = TokenUtil.gettext().replace("\n", "");
+            } while (text.contains("——") || text.length() >= 100);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
+        //text="";
+        // 分别截取20个字符到text1、text2、text3
+        text1 = substringSafe(text, 0, 20);
+        text2 = substringSafe(text, 20, 40);
+        text3 = substringSafe(text, 40, 60);
+        text4 = substringSafe(text, 60, 80);
+        text5 = substringSafe(text, 80, 100);
 
         // 参数封装
         JSONObject param = new JSONObject();
@@ -69,7 +83,7 @@ public class EveningService {
         param12.put("color", WXUtil.getColor());
 
         JSONObject param3 = new JSONObject();
-        param3.put("value", "深圳市" + weaver.getForecasts().get(0).getCity());
+        param3.put("value", "赣州市" + weaver.getForecasts().get(0).getCity());
         param3.put("color", WXUtil.getColor());
 
         JSONObject param4 = new JSONObject();
@@ -89,8 +103,29 @@ public class EveningService {
 //        param7.put("color", WXUtil.getColor());
 
         JSONObject param8 = new JSONObject();
-        param8.put("value", "很抱歉的通知11，你的圣诞礼物预计有迟到风险");
+        param8.put("value", text);
         param8.put("color", WXUtil.getColor());
+
+
+        JSONObject param13 = new JSONObject();
+        param13.put("value", text1);
+        param13.put("color", WXUtil.getColor());
+
+        JSONObject param14 = new JSONObject();
+        param14.put("value", text2);
+        param14.put("color", WXUtil.getColor());
+
+        JSONObject param15 = new JSONObject();
+        param15.put("value", text3);
+        param15.put("color", WXUtil.getColor());
+
+        JSONObject param16 = new JSONObject();
+        param16.put("value", text4);
+        param16.put("color", WXUtil.getColor());
+
+        JSONObject param17 = new JSONObject();
+        param17.put("value", text5);
+        param17.put("color", WXUtil.getColor());
 
         JSONObject param9 = new JSONObject();
         param9.put("value", weaver.getForecasts().get(0).getCasts().get(0).getDayPower());
@@ -114,10 +149,44 @@ public class EveningService {
         data.put("birthday_left", param6);
 //        data.put("humidity", param7);
         data.put("words", param8);
+        data.put("words1", param13);
+        data.put("words2", param14);
+        data.put("words3", param15);
+        data.put("words4", param16);
+        data.put("words5", param17);
         data.put("windpower", param9);
         data.put("date", param10);
         data.put("week", param11);
         return data;
     }
 
+    private static String substringSafe(String input, int beginIndex, int endIndex) {
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
+        int length = input.length();
+        if (beginIndex < 0) {
+            beginIndex = 0;
+        }
+        if (endIndex > length) {
+            endIndex = length;
+        }
+
+        // 如果截取的起始位置大于等于结束位置，则返回空字符串
+        if (beginIndex >= endIndex) {
+            return "";
+        }
+
+        return input.substring(beginIndex, endIndex);
+    }
+
+    // 按顺序选择文本
+    private static String getSequentialText(List<String> list) {
+        if (textIndex >= list.size()) {
+            // 如果计数器超过文本列表的大小，重新从列表的开头开始
+            textIndex = 0;
+        }
+        return list.get(textIndex++);
+    }
 }
