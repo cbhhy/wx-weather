@@ -2,6 +2,7 @@ package com.codehuan.service;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.codehuan.entity.vo.GaoDeWeaverVo;
 import com.codehuan.util.TokenUtil;
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ZhangHuan created on 2022/8/22
@@ -38,14 +36,32 @@ public class EveningService {
         // 计算生日，
         int birthday = TokenUtil.getNextBirthday("11-16");
 
+        Long sportsDays = TokenUtil.getCountDays("2025-02-10");
+
         // 在一起多少天
         Long days = TokenUtil.getCountDays("2024-09-27");
 
         // 获取星期
         Date date = new Date();
-        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE", Locale.CANADA);
         String currSun = dateFm.format(date);
-
+        if (StrUtil.equals(currSun, "Monday")) {
+            currSun = "星期一";
+        } else if (StrUtil.equals(currSun, "Tuesday")) {
+            currSun = "星期二";
+        } else if (StrUtil.equals(currSun, "Wednesday")) {
+            currSun = "星期三";
+        } else if (StrUtil.equals(currSun, "Thursday")) {
+            currSun = "星期四";
+        } else if (StrUtil.equals(currSun, "Friday")) {
+            currSun = "星期五";
+        } else if (StrUtil.equals(currSun, "Saturday")) {
+            currSun = "星期六";
+        } else if (StrUtil.equals(currSun, "Sunday")) {
+            currSun = "星期天";
+        } else {
+            currSun = dateFm.format(date);
+        }
         // 毒鸡汤
         String text = null;
         String text1 = null;
@@ -53,14 +69,18 @@ public class EveningService {
         String text3 = null;
         String text4 = null;
         String text5 = null;
-        try {
-            do {
-                text = TokenUtil.gettext().replace("\n", "");
-            } while (text.contains("——") || text.length() >= 100);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+        if (days == 140) {
+            text = "宝宝别生气啦，以后肯定先无条件站在你那边，安抚你的情绪，爱你";
+        } else {
+            try {
+                do {
+                    text = TokenUtil.gettext().replace("\n", "");
+                } while (text.contains("——") || text.length() >= 100);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
         }
-        //text="";
+
         // 分别截取20个字符到text1、text2、text3
         text1 = substringSafe(text, 0, 20);
         text2 = substringSafe(text, 20, 40);
@@ -136,8 +156,17 @@ public class EveningService {
         param10.put("color", WXUtil.getColor());
 
         JSONObject param11 = new JSONObject();
-        param11.put("value", currSun);
+        if (days == 140) {
+            param11.put("value", currSun + "情人节");
+        } else {
+            param11.put("value", currSun);
+        }
         param11.put("color", WXUtil.getColor());
+
+        JSONObject param20 = new JSONObject();
+        param20.put("value", sportsDays - 1);
+        param20.put("color", WXUtil.getColor());
+
 
         Map<String, Object> data = new HashMap<>();
         data.put("weather", param);
@@ -157,6 +186,7 @@ public class EveningService {
         data.put("windpower", param9);
         data.put("date", param10);
         data.put("week", param11);
+        data.put("sportsDays", param20);
         return data;
     }
 

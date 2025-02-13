@@ -40,7 +40,7 @@ public class WXTask {
         assert users != null;
         for (Object user : users) {
             // if ("oJr7d6eZMUilE3trpA53UZSdVJMQ".equals(user.toString())) {
-            WXUtil.sendMsg(user.toString(), "X81kjwS9fLpOOy1WBo3KR5wwTk7tithauw8vMObe2jc", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "zSx8Lzc080S0Md4BDTO5pvAMv_-ecsXeRgo81M-zYn8", Constants.APP_ID, data);
         }
         //}
     }
@@ -60,13 +60,13 @@ public class WXTask {
         // 发送信息
         assert users != null;
         for (Object user : users) {
-            WXUtil.sendMsg(user.toString(), "X81kjwS9fLpOOy1WBo3KR5wwTk7tithauw8vMObe2jc", Constants.APP_ID, data);
+            WXUtil.sendMsg(user.toString(), "zSx8Lzc080S0Md4BDTO5pvAMv_-ecsXeRgo81M-zYn8", Constants.APP_ID, data);
         }
     }
 
 
     //@Scheduled(cron = "0 */1 *  * * ? ")
-    @Scheduled(cron = "00 30 23 * * ? ")
+    @Scheduled(cron = "00 00 23 * * ? ")
     public void evening() {
         log.info("开始执行定时任务!!!");
         Map<String, Object> data = eveningService.encapsulation();
