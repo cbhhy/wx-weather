@@ -69,16 +69,12 @@ public class EveningService {
         String text3 = null;
         String text4 = null;
         String text5 = null;
-        if (days == 140) {
-            text = "宝宝别生气啦，以后肯定先无条件站在你那边，安抚你的情绪，爱你";
-        } else {
-            try {
-                do {
-                    text = TokenUtil.gettext().replace("\n", "");
-                } while (text.contains("——") || text.length() >= 100);
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            do {
+                text = TokenUtil.gettext().replace("\n", "");
+            } while (text.contains("——") || text.length() >= 100);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
 
         // 分别截取20个字符到text1、text2、text3
